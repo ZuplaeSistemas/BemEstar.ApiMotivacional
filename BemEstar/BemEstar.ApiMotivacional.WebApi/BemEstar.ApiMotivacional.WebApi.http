@@ -1,0 +1,6 @@
+@BemEstar.ApiMotivacional.WebApi_HostAddress = http://localhost:5135
+
+GET {{BemEstar.ApiMotivacional.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
