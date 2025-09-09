@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BemEstar.ApiMotivacional.Models", "BemEstar.ApiMotivacional.Models\BemEstar.ApiMotivacional.Models.csproj", "{1ED689C9-7F74-4A89-BFE9-67C5F2F5C946}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BemEstar.ApiMotivacional.Service", "BemEstar.ApiMotivacional.Service\BemEstar.ApiMotivacional.Service.csproj", "{D1939DC3-7ABF-483A-B75E-DAAAD5CD5A56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BemEstar.ApiMotivacional.WebApi", "BemEstar.ApiMotivacional.WebApi\BemEstar.ApiMotivacional.WebApi.csproj", "{59BCA0B6-632A-487B-9D11-7C3F22D549EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1ED689C9-7F74-4A89-BFE9-67C5F2F5C946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED689C9-7F74-4A89-BFE9-67C5F2F5C946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED689C9-7F74-4A89-BFE9-67C5F2F5C946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED689C9-7F74-4A89-BFE9-67C5F2F5C946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1939DC3-7ABF-483A-B75E-DAAAD5CD5A56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1939DC3-7ABF-483A-B75E-DAAAD5CD5A56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1939DC3-7ABF-483A-B75E-DAAAD5CD5A56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1939DC3-7ABF-483A-B75E-DAAAD5CD5A56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BCA0B6-632A-487B-9D11-7C3F22D549EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BCA0B6-632A-487B-9D11-7C3F22D549EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BCA0B6-632A-487B-9D11-7C3F22D549EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BCA0B6-632A-487B-9D11-7C3F22D549EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A594ABD-3225-4552-A9B9-5D0D4456FBEF}
+	EndGlobalSection
+EndGlobal
