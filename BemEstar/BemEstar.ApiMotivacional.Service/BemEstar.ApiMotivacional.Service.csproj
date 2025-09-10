@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BemEstar.ApiMotivacional.Models\BemEstar.ApiMotivacional.Models.csproj" />
+  </ItemGroup>
+
 </Project>
