@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\BemEstar.ApiMotivacional.Models\BemEstar.ApiMotivacional.Models.csproj" />
+    <ProjectReference Include="..\BemEstar.ApiMotivacional.Service\BemEstar.ApiMotivacional.Service.csproj" />
   </ItemGroup>
 
 </Project>
