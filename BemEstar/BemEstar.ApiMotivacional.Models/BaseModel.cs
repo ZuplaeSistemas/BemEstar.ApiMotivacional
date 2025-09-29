@@ -8,13 +8,12 @@ namespace BemEstar.ApiMotivacional.Models
 {
     public class BaseModel
     {
-        private static int _nextId = 1; // contador global
+        public int Id { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public int Id { get; private set; }
-
-        public BaseModel()
+        public override string ToString()
         {
-            Id = _nextId++;
+            return $"{this.Id} - {this.CreatedAt}";
         }
     }
 }
