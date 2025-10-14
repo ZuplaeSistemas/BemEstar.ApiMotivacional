@@ -1,3 +1,6 @@
+using BemEstar.ApiMotivacional.Data;
+using BemEstar.ApiMotivacional.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//registra o serviço motivacional
+builder.Services.AddScoped<MotivacionalService>();
+builder.Services.AddScoped<DatabaseConfig>();
 
 builder.Services.AddCors(options =>
 {

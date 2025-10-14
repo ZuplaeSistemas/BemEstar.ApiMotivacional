@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BemEstar.ApiMotivacional.Data\BemEstar.ApiMotivacional.Data.csproj" />
-    <ProjectReference Include="..\BemEstar.ApiMotivacional.Models\BemEstar.ApiMotivacional.Models.csproj" />
+    <PackageReference Include="Npgsql" Version="9.0.4" />
   </ItemGroup>
 
 </Project>

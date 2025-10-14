@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace BemEstar.ApiMotivacional.Service
 {
     public interface IService<T>
-    {
-          
+    { 
         void Create(T model);
         List<T> Read();
         void Update(T model);
