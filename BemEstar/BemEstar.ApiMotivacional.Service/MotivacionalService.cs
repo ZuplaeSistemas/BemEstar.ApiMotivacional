@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BemEstar.ApiMotivacional.Data;
 using BemEstar.ApiMotivacional.Models;
 using Npgsql;
 
@@ -10,105 +11,87 @@ namespace BemEstar.ApiMotivacional.Service
 {
     public class MotivacionalService : BaseService<Motivacional>
     {
-        private readonly string _connectionString = "Host=18.220.9.40;Port=5432;Database=motivacional;Username=postgres;Password=123456";
-
-      
-        public override void Create(Motivacional model)
-        {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
-            string commandText = "INSERT INTO motivacional (texto, autor, created_at) values (@texto, @autor, @created_at)";
-            NpgsqlCommand insertCommand = new NpgsqlCommand(commandText, connection);
-            
-            insertCommand.Parameters.AddWithValue("texto", model.Texto);
-            insertCommand.Parameters.AddWithValue("autor", model.Autor);
-            insertCommand.Parameters.AddWithValue("created_at", model.CreatedAt);
-
-            insertCommand.ExecuteNonQuery();
-            connection.Close();
-
-        }
+        public MotivacionalService(DatabaseConfig config) : base ("motivacional", config){}
 
         public override List<Motivacional> Read()
         {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
+            string commantText = SqlQuery.SelectAll(TableName);
+            
+            using var dataReader = ExecuteReader(commantText);
 
-            string commandText = "SELECT * FROM motivacional";
-            NpgsqlCommand selectCommand = new NpgsqlCommand(commandText, connection);
-
-            NpgsqlDataReader dataReader = selectCommand.ExecuteReader();
-
-            List<Motivacional> list = new List<Motivacional>();
-
-            while (dataReader.Read())
-            {
-                Motivacional motivacional = new Motivacional();
-                motivacional.Id = Convert.ToInt32(dataReader["id"]);
-                motivacional.Texto = dataReader["texto"].ToString();
-                motivacional.Autor = dataReader["autor"].ToString();
-                motivacional.CreatedAt = Convert.ToDateTime(dataReader["created_at"]);
-
-                list.Add(motivacional);
-            }
-
-            connection.Close();
-            return list;
-
+            return MotivacionalList(dataReader);
 
         }
+
+        public override void Create(Motivacional model)
+        {
+            string commandText = SqlQuery.Insert(TableName, new[] { "texto", "autor", "created_at" });
+            var parameters = new Dictionary<string, object>
+            {
+                {"texto", model.Texto },
+                { "autor", model.Autor },
+                { "created_at", model.CreatedAt }
+
+            };
+            ExecuteNonQuery(commandText, parameters);
+
+        }
+
         public override Motivacional ReadById(int id)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
+            string commandText = SqlQuery.SelectById(TableName);
+            var parameters = new Dictionary<string, object>() { {  "id", id } };
 
-            string commandText = "SELECT * FROM motivacional WHERE id = @id";
-            NpgsqlCommand selectCommand = new NpgsqlCommand(commandText, connection);
-            selectCommand.Parameters.AddWithValue("id", id);
+            using var dataReader  = ExecuteReader(commandText, parameters);
 
-            NpgsqlDataReader dataReader = selectCommand.ExecuteReader();
-
-            Motivacional motivacional = new Motivacional();
-            if (dataReader.Read())
-            {
-                motivacional.Id = Convert.ToInt32(dataReader["id"]);
-                motivacional.Texto = dataReader["texto"].ToString();
-                motivacional.Autor = dataReader["autor"].ToString();
-                motivacional.CreatedAt = Convert.ToDateTime(dataReader["created_at"]);
-            }
-            connection.Close();
-            return motivacional;
-
-        }
-
-        public override void Delete(int id)
-        {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
-
-            string commandText = "DELETE FROM motivacional WHERE id = @id";
-            NpgsqlCommand deleteCommand = new NpgsqlCommand(commandText, connection);
-            deleteCommand.Parameters.AddWithValue("id", id);
-
-            deleteCommand.ExecuteNonQuery();
-            connection.Close();
+            return MotivacionalList(dataReader).FirstOrDefault();
 
         }
 
 
         public override void Update(Motivacional model)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
-            string commandText = "UPDATE motivacional SET texto = @texto, autor = @autor WHERE id = @id";
-            NpgsqlCommand updateCommand = new NpgsqlCommand(commandText, connection);
-
-            updateCommand.Parameters.AddWithValue("texto", model.Texto);
-            updateCommand.Parameters.AddWithValue("autor", model.Autor);
-            updateCommand.Parameters.AddWithValue("id", model.Id);
-
-            updateCommand.ExecuteNonQuery();
-            connection.Close();
+            string commandText = SqlQuery.Update(TableName, new[] { "texto", "autor", "created_at" });
+            var parameters = new Dictionary<string, object>
+            {
+                { "texto", model.Texto },
+                { "autor", model.Autor },
+                { "created_at", model.CreatedAt },
+                { "id", model.Id }
+            };
+            ExecuteNonQuery(commandText, parameters);
         }
+
+        public override void Delete(int id)
+        {
+            string commandText = SqlQuery.Delete(TableName);
+            var parameters = new Dictionary<string, object> { { "id", id } };
+            ExecuteNonQuery(commandText, parameters);
+
+        }
+
+        //metodo auxiliares
+        private List<Motivacional> MotivacionalList(NpgsqlDataReader dataReader)
+        {
+            var list = new List<Motivacional>();
+
+            while (dataReader.Read())
+            {
+                var motivacional = new Motivacional
+                {
+                    Id = Convert.ToInt32(dataReader["id"]),
+                    Texto = dataReader["texto"].ToString(),
+                    Autor = dataReader["autor"].ToString(),
+                    CreatedAt = Convert.ToDateTime(dataReader["created_at"])
+                };
+
+                list.Add(motivacional);
+            }
+
+            return list;
+        }
+
+      
+
     }
 }

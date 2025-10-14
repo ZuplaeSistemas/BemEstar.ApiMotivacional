@@ -1,39 +1,85 @@
 ﻿
 using System.ComponentModel;
+using BemEstar.ApiMotivacional.Data;
 using BemEstar.ApiMotivacional.Models;
+using Npgsql;
 
 namespace BemEstar.ApiMotivacional.Service
 {
     public class BaseService<T> : IService<T> where T : BaseModel
     {
-        public static List<T> list  = new List<T>();
-        public virtual void Create(T model)
+        protected readonly DatabaseConfig _config;
+        protected readonly string TableName;
+
+        public BaseService(string tableName, DatabaseConfig config)
         {
-            list.Add(model);
+            _config = config;
+            TableName = tableName;
         }
 
-        public virtual void Delete(int id)
+        /// <summary>
+        /// Cria e abre uma conexão com o banco de dados PostgreSQL.
+        /// Encapsula a lógica de conexão dentro do padrão <b>Repository</b>.
+        /// </summary>
+        /// <returns>Conexão aberta (NpgsqlConnection).</returns>
+        protected NpgsqlConnection GetConnection()
         {
-            T item = this.ReadById(id);
-            list.Remove(item);
+            var db = new DatabaseConnection(_config);
+            return db.Open();
         }
 
-        public virtual List<T> Read()
+        /// <summary>
+        /// Executa comandos SQL do tipo INSERT, UPDATE e DELETE.
+        /// Aplica o padrão <b>Repository</b> para centralizar o acesso ao banco
+        /// e reutilizar a lógica de execução de comandos parametrizados.
+        /// </summary>
+        /// <param name="commandText">Comando SQL parametrizado.</param>
+        /// <param name="parameters">Dicionário de parâmetros SQL e valores.</param>
+        public void ExecuteNonQuery(string commandText, Dictionary<string, object> parameters)
         {
-            return list;
+            using var connection = GetConnection();
+            using var command = new NpgsqlCommand(commandText, connection);
+
+            foreach (var param in parameters)
+            {
+                command.Parameters.AddWithValue(param.Key, param.Value);
+            }
+            command.ExecuteNonQuery();
         }
 
-        public virtual T ReadById(int id)
+        /// <summary>
+        /// Executa consultas SQL (SELECT) e retorna um leitor de dados (DataReader).
+        /// Aplica o padrão <b>Template Method</b>, permitindo que subclasses personalizem a leitura dos dados.
+        /// </summary>
+        /// <param name="commandText">Comando SQL SELECT.</param>
+        /// <param name="parameters">Parâmetros opcionais da consulta.</param>
+        /// <returns>Objeto <see cref="NpgsqlDataReader"/> com os resultados da consulta.</returns>
+        public NpgsqlDataReader ExecuteReader(string commandText, Dictionary<string, object>? parameters = null)
         {
-            T item = list.FirstOrDefault(i => i.Id == id);
-            return item;
+            var connection = GetConnection();
+            var command = new NpgsqlCommand(commandText, connection);
+            if (parameters != null)
+            {
+                foreach (var param in parameters)
+                {
+                    command.Parameters.AddWithValue(param.Key, param.Value);
+                }
+            }
+            return command.ExecuteReader();
         }
 
-        public virtual void Update(T model)
-        {
-            T olditem = this.ReadById(model.Id);
-            this.Delete(olditem.Id);
-            this.Create(model);
-        }
+        /// <summary>
+        /// Cria um novo registro no banco de dados.
+        /// Método virtual que pode ser sobrescrito por classes derivadas.
+        /// </summary>
+        public virtual void Create(T model) { }
+
+        public virtual void Delete(int id) { }
+
+        public virtual List<T> Read() => new List<T>();
+
+        public virtual T ReadById(int id) => null;
+
+        public virtual void Update(T model) { }
     }
 }
