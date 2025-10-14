@@ -17,13 +17,24 @@ namespace BemEstar.ApiMotivacional.Service
             TableName = tableName;
         }
 
+        /// <summary>
+        /// Cria e abre uma conexão com o banco de dados PostgreSQL.
+        /// Encapsula a lógica de conexão dentro do padrão <b>Repository</b>.
+        /// </summary>
+        /// <returns>Conexão aberta (NpgsqlConnection).</returns>
         protected NpgsqlConnection GetConnection()
         {
             var db = new DatabaseConnection(_config);
             return db.Open();
         }
 
-        //metodo auxiliar para executar comandos com parametros(INSERT, UPDATE, DELETE)
+        /// <summary>
+        /// Executa comandos SQL do tipo INSERT, UPDATE e DELETE.
+        /// Aplica o padrão <b>Repository</b> para centralizar o acesso ao banco
+        /// e reutilizar a lógica de execução de comandos parametrizados.
+        /// </summary>
+        /// <param name="commandText">Comando SQL parametrizado.</param>
+        /// <param name="parameters">Dicionário de parâmetros SQL e valores.</param>
         public void ExecuteNonQuery(string commandText, Dictionary<string, object> parameters)
         {
             using var connection = GetConnection();
@@ -36,7 +47,13 @@ namespace BemEstar.ApiMotivacional.Service
             command.ExecuteNonQuery();
         }
 
-        //metodo para executar SELECT, ById e retornar
+        /// <summary>
+        /// Executa consultas SQL (SELECT) e retorna um leitor de dados (DataReader).
+        /// Aplica o padrão <b>Template Method</b>, permitindo que subclasses personalizem a leitura dos dados.
+        /// </summary>
+        /// <param name="commandText">Comando SQL SELECT.</param>
+        /// <param name="parameters">Parâmetros opcionais da consulta.</param>
+        /// <returns>Objeto <see cref="NpgsqlDataReader"/> com os resultados da consulta.</returns>
         public NpgsqlDataReader ExecuteReader(string commandText, Dictionary<string, object>? parameters = null)
         {
             var connection = GetConnection();
@@ -51,10 +68,10 @@ namespace BemEstar.ApiMotivacional.Service
             return command.ExecuteReader();
         }
 
-       
-
-
-        // metodos CRUD virtuais podem ser sobrescritos
+        /// <summary>
+        /// Cria um novo registro no banco de dados.
+        /// Método virtual que pode ser sobrescrito por classes derivadas.
+        /// </summary>
         public virtual void Create(T model) { }
 
         public virtual void Delete(int id) { }
