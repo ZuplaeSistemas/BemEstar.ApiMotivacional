@@ -10,13 +10,16 @@ namespace BemEstar.ApiMotivacional.Service
 {
     public class MotivacionalService : BaseService<Motivacional>
     {
-        private readonly string _connectionString = "Host=18.220.9.40;Port=5432;Database=motivacional;Username=postgres;Password=123456";
+        private DataBase _dataBase;
+        public MotivacionalService()
+        {
+            this._dataBase = new DataBase();
+        }
 
-      
+
         public override void Create(Motivacional model)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
+            NpgsqlConnection connection = _dataBase.GetConnection();
             string commandText = "INSERT INTO motivacional (texto, autor, created_at) values (@texto, @autor, @created_at)";
             NpgsqlCommand insertCommand = new NpgsqlCommand(commandText, connection);
             
@@ -25,14 +28,13 @@ namespace BemEstar.ApiMotivacional.Service
             insertCommand.Parameters.AddWithValue("created_at", model.CreatedAt);
 
             insertCommand.ExecuteNonQuery();
-            connection.Close();
+            _dataBase.CloseConnection(connection);
 
         }
 
         public override List<Motivacional> Read()
         {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
+            NpgsqlConnection connection = _dataBase.GetConnection();
 
             string commandText = "SELECT * FROM motivacional";
             NpgsqlCommand selectCommand = new NpgsqlCommand(commandText, connection);
@@ -52,15 +54,14 @@ namespace BemEstar.ApiMotivacional.Service
                 list.Add(motivacional);
             }
 
-            connection.Close();
+            _dataBase.CloseConnection(connection);
             return list;
 
 
         }
         public override Motivacional ReadById(int id)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
+            NpgsqlConnection connection = _dataBase.GetConnection();
 
             string commandText = "SELECT * FROM motivacional WHERE id = @id";
             NpgsqlCommand selectCommand = new NpgsqlCommand(commandText, connection);
@@ -76,30 +77,29 @@ namespace BemEstar.ApiMotivacional.Service
                 motivacional.Autor = dataReader["autor"].ToString();
                 motivacional.CreatedAt = Convert.ToDateTime(dataReader["created_at"]);
             }
-            connection.Close();
+            _dataBase.CloseConnection(connection);
             return motivacional;
 
         }
 
         public override void Delete(int id)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
+            NpgsqlConnection connection = _dataBase.GetConnection();
 
             string commandText = "DELETE FROM motivacional WHERE id = @id";
             NpgsqlCommand deleteCommand = new NpgsqlCommand(commandText, connection);
             deleteCommand.Parameters.AddWithValue("id", id);
 
             deleteCommand.ExecuteNonQuery();
-            connection.Close();
+            _dataBase.CloseConnection(connection);
 
         }
 
 
         public override void Update(Motivacional model)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
+            NpgsqlConnection connection = _dataBase.GetConnection();
+
             string commandText = "UPDATE motivacional SET texto = @texto, autor = @autor WHERE id = @id";
             NpgsqlCommand updateCommand = new NpgsqlCommand(commandText, connection);
 
@@ -108,7 +108,7 @@ namespace BemEstar.ApiMotivacional.Service
             updateCommand.Parameters.AddWithValue("id", model.Id);
 
             updateCommand.ExecuteNonQuery();
-            connection.Close();
+            _dataBase.CloseConnection(connection);
         }
     }
 }
