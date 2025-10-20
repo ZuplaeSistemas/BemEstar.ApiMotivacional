@@ -9,11 +9,12 @@ namespace BemEstar.ApiMotivacional.Service
 {
     internal class DataBase
     {
-        private readonly string _connectionString = "Host=18.220.9.40;Port=5432;Database=motivacional;Username=postgres;Password=123456";
+        private readonly string _connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_POSTGRES");
+            
 
         public NpgsqlConnection GetConnection()
         {
-            NpgsqlConnection connection = new NpgsqlConnection(this._connectionString);
+            NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
             connection.Open();
             return connection;
         }
