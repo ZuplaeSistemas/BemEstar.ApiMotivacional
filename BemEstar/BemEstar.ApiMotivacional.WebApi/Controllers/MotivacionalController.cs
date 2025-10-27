@@ -11,7 +11,12 @@ namespace AulaWebApi.WebApi.Controllers
     [ApiController]
     public class MotivacionalController : ControllerBase
     {
-        private MotivacionalService _service = new MotivacionalService();
+        private MotivacionalService _service;
+
+        public MotivacionalController(MotivacionalService service)
+        {
+            _service = service;
+        }
 
         [HttpGet]
         public List<Motivacional> Get()
