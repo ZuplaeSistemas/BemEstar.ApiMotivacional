@@ -1,6 +1,7 @@
 using BemEstar.ApiMotivacional.Service;
 using BemEstar.ApiMotivacional.Infra.Config;
 using BemEstar.ApiMotivacional.Infra.Db;
+using BemEstar.ApiMotivacional.Infra.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,7 @@ builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddSingleton<AppConfiguration>();
 builder.Services.AddSingleton<IDbConnectionFactory, NpgsqlConnectionFactory>();
 builder.Services.AddScoped<MotivacionalService>();
+builder.Services.AddScoped<MotivacionalRepository>();
 
 var app = builder.Build();
 
