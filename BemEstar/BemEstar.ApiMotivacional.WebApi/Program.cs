@@ -32,7 +32,7 @@ builder.Configuration
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddSingleton<AppConfiguration>();
-builder.Services.AddSingleton<IDbConnectionFactory, NpgsqlConnectionFactory>();
+builder.Services.AddSingleton<IDbConnectionFactory, MySqlDataConnectionFactory>();
 builder.Services.AddScoped<MotivacionalService>();
 builder.Services.AddScoped<MotivacionalRepository>();
 

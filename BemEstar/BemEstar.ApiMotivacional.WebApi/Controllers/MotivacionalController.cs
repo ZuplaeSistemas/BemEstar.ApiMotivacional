@@ -31,6 +31,11 @@ namespace AulaWebApi.WebApi.Controllers
             return this._service.ReadById(id);
         }
 
+        [HttpGet("exist/{id}")]
+        public bool Exist(int id)
+        {
+            return this._service.Exists(id);
+        }
 
         [HttpPost]
         public void Post([FromBody] Motivacional model)

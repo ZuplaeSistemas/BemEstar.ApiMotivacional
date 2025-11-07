@@ -11,16 +11,19 @@ namespace BemEstar.ApiMotivacional.Infra.Db
 
         public NpgsqlConnectionFactory(AppConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString();
+            _connectionString = configuration.GetConnectionString("Postgres");
         }
 
         //Padrão de projeto Factory Method
-      
+
         public IDbConnection GetConnection()
         {
             NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
             connection.Open();
             return connection;
         }
+
+
+
     }
 }

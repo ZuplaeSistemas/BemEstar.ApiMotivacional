@@ -13,6 +13,7 @@ namespace BemEstar.ApiMotivacional.Service
     public class MotivacionalService : Service<Motivacional>
     {
         public MotivacionalService(MotivacionalRepository repository): base(repository){}
+
     }
 
 }

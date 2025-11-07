@@ -14,6 +14,7 @@ namespace BemEstar.ApiMotivacional.Service
         void Update(T model);
         void Delete(int id);
         T ReadById(int id);
+        bool Exists(int id);
     }
 
 }

@@ -20,22 +20,27 @@ namespace BemEstar.ApiMotivacional.Service
             return _repository.Create(model);
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             _repository.Delete(id);
         }
 
-        public List<T> Read()
+        public virtual bool Exists(int id)
+        {
+            return _repository.Exists(id);
+        }
+
+        public virtual List<T> Read()
         {
             return _repository.Read(); 
         }
 
-        public T ReadById(int id)
+        public virtual T ReadById(int id)
         {
             return _repository.ReadById(id);
         }
 
-        public void Update(T model)
+        public virtual void Update(T model)
         {
             _repository.Update(model);
         }
