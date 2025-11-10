@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>f2ca576c-1998-4b4b-bd5a-b0ffadf4a145</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BemEstar.ApiMotivacional.Infra\BemEstar.ApiMotivacional.Infra.csproj" />
     <ProjectReference Include="..\BemEstar.ApiMotivacional.Models\BemEstar.ApiMotivacional.Models.csproj" />
     <ProjectReference Include="..\BemEstar.ApiMotivacional.Service\BemEstar.ApiMotivacional.Service.csproj" />
   </ItemGroup>

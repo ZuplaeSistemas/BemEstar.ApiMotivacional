@@ -4,14 +4,16 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>3b504c0a-b221-4c38-a396-f708ad17679d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql" Version="9.0.3" />
+    <ProjectReference Include="..\BemEstar.ApiMotivacional.Infra\BemEstar.ApiMotivacional.Infra.csproj" />
+    <ProjectReference Include="..\BemEstar.ApiMotivacional.Models\BemEstar.ApiMotivacional.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BemEstar.ApiMotivacional.Models\BemEstar.ApiMotivacional.Models.csproj" />
+    <PackageReference Include="Npgsql" Version="9.0.4" />
   </ItemGroup>
 
 </Project>

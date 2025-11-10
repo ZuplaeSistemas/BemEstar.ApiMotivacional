@@ -4,18 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BemEstar.ApiMotivacional.Service
+namespace BemEstar.ApiMotivacional.Infra.Repositories
 {
-    public interface IService<T>
+    public interface IRepository<T>
     {
-          
-        int Create(T model);
+        int Create(T entity);
         List<T> Read();
-        void Update(T model);
-        void Delete(int id);
         T ReadById(int id);
+        void Update(T entity);
+        void Delete(int id);
         bool Exists(int id);
+
     }
-
 }
-
