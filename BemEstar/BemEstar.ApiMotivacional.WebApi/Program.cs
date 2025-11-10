@@ -32,7 +32,13 @@ builder.Configuration
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddSingleton<AppConfiguration>();
-builder.Services.AddSingleton<IDbConnectionFactory, MySqlDataConnectionFactory>();
+
+//Escolha do banco de dados 
+//builder.Services.AddSingleton<IDbConnectionFactory, MySqlDataConnectionFactory>();
+// ou se quiser trocar para PostgreSQL:
+ builder.Services.AddSingleton<IDbConnectionFactory, NpgsqlConnectionFactory>();
+
+
 builder.Services.AddScoped<MotivacionalService>();
 builder.Services.AddScoped<MotivacionalRepository>();
 

@@ -22,7 +22,10 @@ namespace BemEstar.ApiMotivacional.Infra.Db
             connection.Open();
             return connection;
         }
-
+        public IDbCommand CreateCommand(string query, IDbConnection connection)
+        {
+            return new NpgsqlCommand(query, (NpgsqlConnection)connection);
+        }
 
 
     }

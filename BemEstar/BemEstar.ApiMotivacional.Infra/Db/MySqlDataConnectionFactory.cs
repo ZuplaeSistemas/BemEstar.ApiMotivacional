@@ -24,7 +24,11 @@ namespace BemEstar.ApiMotivacional.Infra.Db
             MySqlConnection connection = new(_connectionString);
             connection.Open();
             return connection;
+        }
 
+        public IDbCommand CreateCommand(string query, IDbConnection connection)
+        {
+            return new MySqlCommand(query, (MySqlConnection)connection);
         }
     }
 }

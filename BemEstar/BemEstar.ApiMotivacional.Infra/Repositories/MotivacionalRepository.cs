@@ -8,7 +8,7 @@ using BemEstar.ApiMotivacional.Models;
 
 namespace BemEstar.ApiMotivacional.Infra.Repositories
 {
-    public class MotivacionalRepository : RepositoryInDbMySql<Motivacional>
+    public class MotivacionalRepository : RepositoryInDbPostgres
     {
         public MotivacionalRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)
         {

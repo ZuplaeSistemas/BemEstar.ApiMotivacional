@@ -10,6 +10,6 @@ namespace BemEstar.ApiMotivacional.Infra.Db
     public interface IDbConnectionFactory
     {
         IDbConnection GetConnection();
-        
+        IDbCommand CreateCommand(string query, IDbConnection connection);
     }
 }
